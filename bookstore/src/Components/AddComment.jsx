@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 
 class AddComment extends Component {
   state = {
-    comment: {
+    commentForm: {
       comment: "",
       rate: 1,
       elementId: this.props.asin,
@@ -14,10 +14,10 @@ class AddComment extends Component {
     e.preventDefault();
     try {
       let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/comments",
+        "https://striveschool-api.herokuapp.com/api/comments/",
         {
           method: "POST",
-          body: JSON.stringify(this.state.comment),
+          body: JSON.stringify(this.state.commentForm),
           headers: {
             "Content-type": "application/json",
             Authorization:
@@ -28,6 +28,13 @@ class AddComment extends Component {
       if (response.ok) {
         // the comment has been sent succesfully!!
         alert("Comment was sent!");
+        this.setState({
+          commentForm: {
+            comment: null,
+            rate: null,
+            elementId: this.props.asin,
+          },
+        });
       } else {
         console.log("error");
         alert("something went wrong");
@@ -42,15 +49,16 @@ class AddComment extends Component {
       <div>
         <Form onSubmit={this.sendComment}>
           <Form.Group>
-            <Form.Label>Comment text</Form.Label>
+            <Form.Label>Write your comment here:</Form.Label>
             <Form.Control
-              type="text"
+              type="textarea"
+              rows={3}
               placeholder="Add comment here"
-              value={this.state.comment.comment}
+              value={this.state.commentForm.comment}
               onChange={(e) =>
                 this.setState({
-                  comment: {
-                    ...this.state.comment,
+                  commentForm: {
+                    ...this.state.commentForm,
                     comment: e.target.value,
                   },
                 })
@@ -58,14 +66,14 @@ class AddComment extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Rating</Form.Label>
+            <Form.Label>Select Rating:</Form.Label>
             <Form.Control
               as="select"
-              value={this.state.comment.rate}
+              value={this.state.commentForm.rate}
               onChange={(e) =>
                 this.setState({
-                  comment: {
-                    ...this.state.comment,
+                  commentForm: {
+                    ...this.state.commentForm,
                     rate: e.target.value,
                   },
                 })
