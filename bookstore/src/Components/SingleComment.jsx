@@ -1,6 +1,6 @@
 import { Button, ListGroup } from "react-bootstrap";
 
-const deleteComment = async (asin) => {
+const deleteComment = async (asin, fetchBook) => {
   try {
     let response = await fetch(
       "https://striveschool-api.herokuapp.com/api/comments/" + asin,
@@ -14,6 +14,7 @@ const deleteComment = async (asin) => {
     );
     if (response.ok) {
       alert("comment deleted!");
+      fetchBook();
     } else {
       alert("comment NOT deleted!");
     }
@@ -22,13 +23,13 @@ const deleteComment = async (asin) => {
   }
 };
 
-const SingleComment = ({ comment }) => (
+const SingleComment = (prop) => (
   <ListGroup.Item>
-    {comment.comment}
+    {prop.comment.comment}
     <Button
       variant="danger"
       className="ml-2"
-      onClick={() => deleteComment(comment._id)}
+      onClick={() => deleteComment(prop.comment._id, prop.fetchBook)}
     >
       D
     </Button>

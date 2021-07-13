@@ -28,6 +28,7 @@ class AddComment extends Component {
       if (response.ok) {
         // the comment has been sent succesfully!!
         alert("Comment was sent!");
+
         this.setState({
           commentForm: {
             comment: null,
@@ -35,6 +36,7 @@ class AddComment extends Component {
             elementId: this.props.asin,
           },
         });
+        this.props.fetchBook();
       } else {
         console.log("error");
         alert("something went wrong");

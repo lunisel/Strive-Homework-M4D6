@@ -54,8 +54,12 @@ class CommentArea extends Component {
       <div>
         {this.state.isLoading && <Loading />}
         {this.state.isError && <Error />}
-        <AddComment asin={this.props.b.asin} />
-        <CommentList commentsToShow={this.state.comments} />
+        <img src={this.props.b.img} style={{ width: "10rem" }} />
+        <AddComment asin={this.props.b.asin} fetchBook={this.fetchBook} />
+        <CommentList
+          commentsToShow={this.state.comments}
+          fetchBook={this.fetchBook}
+        />
       </div>
     );
   }
