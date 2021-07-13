@@ -23,12 +23,14 @@ class CommentArea extends Component {
           },
         }
       );
-      this.setState({
-        id: this.props.b.asin,
-      });
       if (response.ok) {
         let comments = await response.json();
-        this.setState({ comments: comments, isLoading: false, isError: false });
+        this.setState({
+          comments: comments,
+          isLoading: false,
+          isError: false,
+          id: this.props.b.asin,
+        });
       } else {
         console.log("error");
         this.setState({ isLoading: false, isError: true });
